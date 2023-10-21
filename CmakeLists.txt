@@ -63,3 +63,7 @@ if(SFML_VERSION_MINOR LESS 2)
 endif()
 
 target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+
+# copy media files
+file(GLOB MEDIA_FOLDER Media)
+file(COPY ${MEDIA_FOLDER} DESTINATION /)
