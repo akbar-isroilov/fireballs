@@ -1,6 +1,7 @@
 #include <Player.hpp>
 #include <CommandQueue.hpp>
 #include <Aircraft.hpp>
+#include <Fireball.hpp>
 #include <Foreach.hpp>
 
 #include <map>
@@ -23,13 +24,27 @@ struct AircraftMover
 	sf::Vector2f velocity;
 };
 
+struct FireballMover
+{
+	FireballMover(float vx, float vy)
+	: velocity(vx, vy) {
+	}
+
+	void operator() (Fireball& fireball, sf::Time) const
+	{
+		fireball.accelerate(velocity);
+	}
+
+	sf::Vector2f velocity;
+};
+
 Player::Player()
 {
 	// Set initial key bindings
-	mKeyBinding[sf::Keyboard::Left] = MoveLeft;
-	mKeyBinding[sf::Keyboard::Right] = MoveRight;
-	mKeyBinding[sf::Keyboard::Up] = MoveUp;
-	mKeyBinding[sf::Keyboard::Down] = MoveDown;
+	mKeyBinding[sf::Keyboard::A] = MoveLeft;
+	mKeyBinding[sf::Keyboard::D] = MoveRight;
+	mKeyBinding[sf::Keyboard::W] = MoveUp;
+	mKeyBinding[sf::Keyboard::S] = MoveDown;
 
 	// Set initial action bindings
 	initializeActions();	
@@ -91,10 +106,14 @@ void Player::initializeActions()
 {
 	const float playerSpeed = 200.f;
 
-	mActionBinding[MoveLeft].action	 = derivedAction<Aircraft>(AircraftMover(-playerSpeed, 0.f));
-	mActionBinding[MoveRight].action = derivedAction<Aircraft>(AircraftMover(+playerSpeed, 0.f));
-	mActionBinding[MoveUp].action    = derivedAction<Aircraft>(AircraftMover(0.f, -playerSpeed));
-	mActionBinding[MoveDown].action  = derivedAction<Aircraft>(AircraftMover(0.f, +playerSpeed));
+	//mActionBinding[MoveLeft].action	 = derivedAction<Aircraft>(AircraftMover(-playerSpeed, 0.f));
+	//mActionBinding[MoveRight].action = derivedAction<Aircraft>(AircraftMover(+playerSpeed, 0.f));
+	//mActionBinding[MoveUp].action    = derivedAction<Aircraft>(AircraftMover(0.f, -playerSpeed));
+	//mActionBinding[MoveDown].action = derivedAction<Aircraft>(AircraftMover(0.f, +playerSpeed));
+	mActionBinding[MoveLeft].action = derivedAction<Fireball>(FireballMover(-playerSpeed, 0.f));
+	mActionBinding[MoveRight].action = derivedAction<Fireball>(FireballMover(playerSpeed, 0.f));
+	mActionBinding[MoveUp].action = derivedAction<Fireball>(FireballMover(0.f, -playerSpeed));
+	mActionBinding[MoveDown].action = derivedAction<Fireball>(FireballMover(0.f, playerSpeed));
 }
 
 bool Player::isRealtimeAction(Action action)

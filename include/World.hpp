@@ -6,6 +6,7 @@
 #include <SceneNode.hpp>
 #include <SpriteNode.hpp>
 #include <Aircraft.hpp>
+#include <Fireball.hpp>
 #include <CommandQueue.hpp>
 #include <Command.hpp>
 
@@ -61,7 +62,8 @@ class World : private sf::NonCopyable
 		sf::FloatRect						mWorldBounds;
 		sf::Vector2f						mSpawnPosition;
 		float								mScrollSpeed;
-		Aircraft*							mPlayerAircraft;
+		//Aircraft*							mPlayerAircraft;
+		Fireball*							mPlayerFireball;
 };
 
 #endif // WORLD_HPP
