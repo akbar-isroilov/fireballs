@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.25)
 
+
 project(fireballs VERSION 1.0)
 
 # Configuration options
-set(SFML_ROOT "C:/SFML")
+set(SFML_ROOT "/home/nivk/Lib/SFML-2.6.1")
+
 set(SFML_STATIC_LIBRARIES FALSE CACHE BOOL "Use static SFML librares")
 
 # General compiler options
@@ -65,5 +67,5 @@ endif()
 target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 # copy media files
-file(GLOB MEDIA_FOLDER Media)
-file(COPY ${MEDIA_FOLDER} DESTINATION /)
+# file(GLOB MEDIA_FOLDER Media)
+# file(COPY ${MEDIA_FOLDER} DESTINATION /)
